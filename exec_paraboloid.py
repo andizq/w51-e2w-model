@@ -22,6 +22,8 @@ temp = [T0, qT]
 
 dens0 = 2e14 * 5 / 2.5
 qn = -1. #-2
+#dens0 = 2e14 * 5 / 2.5 / 50
+#qn = -0.5 #-2
 dens = [dens0, qn]
 
 a = np.sqrt(2*300*AU) #10*AU
