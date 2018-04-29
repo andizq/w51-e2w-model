@@ -1134,14 +1134,14 @@ def Datatab_RADMC3D_FreeFree(dens,temp,GRID):
 #
 # Write the gas temperature
 #
-
+    """
     with open('gas_temperature.inp','w+') as f:
         f.write('1\n')                       # Format number
         f.write('%d\n'%(nx*ny*nz))           # Nr of cells
         #data = tgas.ravel(order='F')          # Create a 1-D view, fortran-style indexing
         temp.tofile(f, sep='\n', format="%13.6e")
         f.write('\n')
-
+    """
 #
 # Write the wavelength_micron.inp file
 #
@@ -1178,7 +1178,19 @@ def Datatab_RADMC3D_FreeFree(dens,temp,GRID):
         f.write('incl_dust = 0\n')
         #f.write('tgas_eq_tdust = 1')
 
-    
+    #
+    rstar = 2 * RSun 
+    mstar = 20 * MSun
+    pstar = np.array([0.,0.,0.])
+    tstar = 20e3
+    with open('stars.inp','w+') as f:
+        f.write('2\n')
+        f.write('1 %d\n\n'%(nlam))
+        f.write('%13.6e %13.6e %13.6e %13.6e %13.6e\n\n'%(rstar,mstar,pstar[0],pstar[1],pstar[2]))
+        for value in lam:
+            f.write('%13.6e\n'%(value))
+        f.write('\n%13.6e\n'%(-tstar))
+
     print ('%s is done!'%inspect.stack()[0][3])
     print ('-------------------------------------------------\n-------------------------------------------------')
     
