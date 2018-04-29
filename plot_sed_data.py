@@ -19,7 +19,7 @@ data = {13.5: 0.15587470697361785,
 
 
 s = readSpectrum(fname = 'spectrum_shell+parab.out') #column 0: wavelength in microns; column 1: Flux in cgs.
-s2 = readSpectrum(fname = 'spectrum_paraboloid.out')
+s2 = readSpectrum(fname = 'spectrum_parab.out')
 s3 = readSpectrum(fname = 'spectrum_shell.out') 
 distance = 5410. #in pc. The spectrum.out file is still normalized to a distance of 1 pc (see radmc3d docs)
 F_nu = s[:,1] * distance**-2 * 1e23 #to Jy at the set distance
@@ -34,5 +34,5 @@ plt.title('%s - distance: %d pc'%(tag,distance))
 plt.xlabel('Frequency [GHz]'); plt.ylabel('Flux [Jy]')
 plt.xscale('log'); plt.yscale('log')
 plt.legend()
-plt.savefig('sed_'+tag+'.png')
+plt.savefig('sed_'+tag+'.png', dpi=300)
 plt.show()
