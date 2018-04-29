@@ -12,6 +12,10 @@ GRID = Model.grid([sizex, sizey, sizez], [Nx, Ny, Nz], radmc3d = True)
 #list_sub = ['datatab_Main.dat', 'datatab_Burger.dat']
 global_prop = BGG.overlap(GRID, all = True, radmc3d = True)
 
+from astropy import units as u
+alpha_b = 2.6e-13*u.cm**3 * u.s**-1
+print(((global_prop.GRID.step*u.m)**3 * (global_prop.density*u.m**-3)**2 * alpha_b).sum().decompose())
+
 #--------
 #PLOTTING
 #--------
