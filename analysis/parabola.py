@@ -6,7 +6,8 @@ import regions
 import numpy as np
 import pylab as pl
 
-if not os.path.exists('W51e2w_ALMAB3_cutout.fits'):
+path_data = '/Users/andrespipecar42/Downloads/Morelia_Dic2016/Package/w51/data/'
+if not os.path.exists(path_data+'W51e2w_ALMAB3_cutout.fits'):
     fh = fits.open('/Users/adam/work/w51/alma/FITS/longbaseline/w51e2_sci.spw0_1_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18_19.mfs.I.manual.image.tt0.pbcor.fits')
     ww = wcs.WCS(fh[0].header).celestial
     pr0 = regions.read_ds9('/Users/adam/work/w51/vla_q/regions/e2w_ellipse.reg')[0].to_pixel(ww)
@@ -20,9 +21,9 @@ if not os.path.exists('W51e2w_ALMAB3_cutout.fits'):
     header.update(ww_cutout.to_header())
     fits.PrimaryHDU(data=img_95ghz, header=header).writeto('W51e2w_ALMAB3_cutout.fits', overwrite=True)
 else:
-    img_95ghz = fits.getdata('W51e2w_ALMAB3_cutout.fits')
+    img_95ghz = fits.getdata(path_data+'W51e2w_ALMAB3_cutout.fits')
 
-if not os.path.exists('W51e2w_VLA_Q_cutout.fits'):
+if not os.path.exists(path_data+'W51e2w_VLA_Q_cutout.fits'):
     fh = fits.open('/Users/adam/work/w51/vla_q/FITS/W51e2w_QbandAarray_cont_spws_continuum_cal_clean_2terms_robust0_wproj_selfcal9.image.tt0.pbcor.fits')
     ww = wcs.WCS(fh[0].header).celestial
     pr0 = regions.read_ds9('/Users/adam/work/w51/vla_q/regions/e2w_ellipse.reg')[0].to_pixel(ww)
@@ -36,7 +37,7 @@ if not os.path.exists('W51e2w_VLA_Q_cutout.fits'):
     header.update(ww_cutout.to_header())
     fits.PrimaryHDU(data=img_45ghz, header=header).writeto('W51e2w_VLA_Q_cutout.fits', overwrite=True)
 else:
-    img_45ghz = fits.getdata('W51e2w_VLA_Q_cutout.fits')
+    img_45ghz = fits.getdata(path_data+'W51e2w_VLA_Q_cutout.fits')
 
 cy,cx = 127,42
 angle = (180+315) * u.deg
