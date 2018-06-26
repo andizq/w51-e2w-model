@@ -39,13 +39,13 @@ if not os.path.exists(path_data+'W51e2w_VLA_Q_cutout.fits'):
 else:
     img_45ghz = fits.getdata(path_data+'W51e2w_VLA_Q_cutout.fits')
 
-cy,cx = 127,42
+cy,cx = 127,41
 angle = (180+315) * u.deg
 
 xx = np.linspace(0,50,1000)
 yy = xx**2 / 28
 
-xx_, yy_ = np.dot([[np.cos(angle), np.sin(angle)], [-np.sin(angle), np.cos(angle)]], [xx,yy])
+xx_, yy_ = np.dot([[np.cos(angle), np.sin(angle)], [-np.sin(angle), np.cos(angle)]], [xx,yy]) #rotation clockwise
 xx2_, yy2_ = np.dot([[np.cos(angle), np.sin(angle)], [-np.sin(angle), np.cos(angle)]], [-xx,yy])
 
 pl.figure(3)
@@ -55,12 +55,14 @@ pl.plot(xx_+cx,yy_+cy, linewidth=0.5, color='w', linestyle='--')
 pl.plot(xx2_+cx,yy2_+cy, linewidth=0.5, color='w', linestyle='--')
 
 data_on_path = img_95ghz[(yy_+cy).astype('int'), (xx_+cx).astype('int')]
-data_on_path2 = img_95ghz[(yy_+cy).astype('int'), (-xx_+cx).astype('int')]
+#data_on_pathb = img_95ghz[(yy_+cy).astype('int'), (-xx_+cx).astype('int')]
+data_on_path2 = img_95ghz[(yy2_+cy).astype('int'), (xx2_+cx).astype('int')]
 prj_dist = (xx**2+yy**2)**0.5
 
 pl.figure(4)
 pl.clf()
 pl.plot(prj_dist, data_on_path)
+#pl.plot(prj_dist, data_on_pathb, color = 'black')
 pl.plot(prj_dist, data_on_path2)
 core = data_on_path[:10].mean()
 profile = (core*(prj_dist/prj_dist[250])**-0.1 * (prj_dist >= prj_dist[250])/10.
@@ -86,7 +88,7 @@ pl.plot(xx_+cx,yy_+cy, linewidth=0.5, color='w', linestyle='--')
 pl.plot(xx2_+cx,yy2_+cy, linewidth=0.5, color='w', linestyle='--')
 
 data_on_path = img_45ghz[(yy_+cy).astype('int'), (xx_+cx).astype('int')]
-data_on_path2 = img_45ghz[(yy_+cy).astype('int'), (-xx_+cx).astype('int')]
+data_on_path2 = img_45ghz[(yy2_+cy).astype('int'), (xx2_+cx).astype('int')]
 prj_dist = (xx**2+yy**2)**0.5
 
 pl.figure(2)
