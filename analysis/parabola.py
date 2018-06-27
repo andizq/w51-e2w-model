@@ -5,7 +5,9 @@ from astropy import units as u
 import regions
 import numpy as np
 import pylab as pl
+import sys
 
+print (sys.argv)
 path_data = '/Users/andrespipecar42/Downloads/Morelia_Dic2016/Package/w51/data/'
 if not os.path.exists(path_data+'W51e2w_ALMAB3_cutout.fits'):
     fh = fits.open('/Users/adam/work/w51/alma/FITS/longbaseline/w51e2_sci.spw0_1_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18_19.mfs.I.manual.image.tt0.pbcor.fits')

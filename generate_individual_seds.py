@@ -19,19 +19,19 @@ GRID = Model.grid([sizex, sizey, sizez], [Nx, Ny, Nz], radmc3d = True)
 global_prop = BGG.overlap(GRID, all = False, radmc3d = True,
                           submodels=['paraboloid0.dat'])
 
-os.system('radmc3d sed dpc 5400')
+os.system('radmc3d sed dpc 5410')
 shutil.move('spectrum.out','spectrum_parab.out')
 
 global_prop = BGG.overlap(GRID, all = False, radmc3d = True,
                           submodels=['shell0.dat'])
 
-os.system('radmc3d sed dpc 5400')
+os.system('radmc3d sed dpc 5410')
 shutil.move('spectrum.out','spectrum_shell.out')
 
 global_prop = BGG.overlap(GRID, all = False, radmc3d = True,
                           submodels=['shell0.dat', 'paraboloid0.dat'])
 
-os.system('radmc3d sed dpc 5400')
+os.system('radmc3d sed dpc 5410')
 shutil.move('spectrum.out','spectrum_shell+parab.out')
 
 
