@@ -1,7 +1,5 @@
-import BuildGlobalGrid as BGG
-import Model
-import Plot_model as Pm
-import Utils as U
+import sf3dmodels.BuildGlobalGrid as BGG
+from sf3dmodels import Model, Plot_model as Pm, Utils as U
 import numpy as np
 
 sizex = 1700 * U.AU

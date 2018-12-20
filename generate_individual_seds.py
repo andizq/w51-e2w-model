@@ -5,10 +5,8 @@ import shutil
 runpy.run_path('exec_paraboloid.py')
 runpy.run_path('exec_shellparab.py')
 
-import BuildGlobalGrid as BGG
-import Model
-import Plot_model as Pm
-import Utils as U
+import sf3dmodels.BuildGlobalGrid as BGG
+from sf3dmodels import Model, Plot_model as Pm, Utils as U
 import numpy as np
 
 sizex = 1700 * U.AU
@@ -34,5 +32,10 @@ global_prop = BGG.overlap(GRID, all = False, radmc3d = True,
 os.system('radmc3d sed dpc 5410')
 shutil.move('spectrum.out','spectrum_shell+parab.out')
 
-
 runpy.run_path('plot_sed_data.py')
+runpy.run_path('generate_fits.py')
+
+os.system('mkdir radmc3d_inp')
+os.system('mv *.inp radmc3d_inp')
+os.system('mkdir radmc3d_out')
+os.system('mv *.out radmc3d_out')

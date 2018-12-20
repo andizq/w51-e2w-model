@@ -2,9 +2,10 @@ import radmc3dPy.image as image
 import matplotlib.pyplot as plt
 import numpy as np
 from argparse import ArgumentParser
+import os
 
-parser = ArgumentParser(prog='Burgers', description='Self-obscuration')
-parser.add_argument('-f', '--file', help='fits file to write')
+parser = ArgumentParser(prog='Paraboloids', description='Free free emission from paraboloids')
+parser.add_argument('-f', '--file', help='fits file to write in')
 args = parser.parse_args()
 
 if args.file: file = args.file
@@ -20,6 +21,8 @@ image.plotImage(im, dpc=dist, arcsec=True, log=True, maxlog=10, saturate=1e-5, c
 cim = im.imConv(fwhm=[1.0, 0.6], pa=120., dpc=dist)
 image.plotImage(cim, arcsec=True, dpc=dist, log=True, maxlog=10, bunit='snu', cmap=plt.cm.gist_heat)
 """
+
+os.system('rm %s'%file)
 im.writeFits(file, dpc=dist)#, coord='03h10m05s -10d05m30s')
 
 

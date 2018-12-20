@@ -1,5 +1,5 @@
-from create_parabola import *
-from Utils import *
+from sf3dmodels.create_parabola import *
+from sf3dmodels.Utils import *
 import os
 
 os.system('mkdir Subgrids')
