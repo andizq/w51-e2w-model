@@ -3,9 +3,9 @@ from sf3dmodels import Model, Plot_model as Pm, Utils as U
 import numpy as np
 
 sizex = 1700 * U.AU
-sizey = sizez = 1700 * U.AU 
+sizey = sizez = sizex
 Nx = 60 
-Ny = Nz = 60
+Ny = Nz = Nx
 GRID = Model.grid([sizex, sizey, sizez], [Nx, Ny, Nz], radmc3d = True)
 #list_sub = ['datatab_Main.dat', 'datatab_Burger.dat']
 global_prop = BGG.overlap(GRID, all = True, radmc3d = True)
