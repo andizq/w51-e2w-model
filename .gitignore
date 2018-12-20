@@ -59,6 +59,8 @@ distribute-*.tar.gz
 *.inp
 *.out
 Subgrids
+radmc3d_out
+radmc3d_inp
 
 # Mac OSX
 .DS_Store
