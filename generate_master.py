@@ -40,7 +40,18 @@ shutil.move('spectrum.out','spectrum_shell+parab.out')
 runpy.run_path('plot_sed_data.py')
 runpy.run_path('generate_fits.py')
 
+print("Creating folder radmc3d_inp/")
 os.system('mkdir radmc3d_inp')
+print("Moving *.inp files to radmc3d_inp/")
 os.system('mv *.inp radmc3d_inp')
+
+print("Creating folder radmc3d_out/")
 os.system('mkdir radmc3d_out')
+print("Moving *.out files to radmc3d_out/")
 os.system('mv *.out radmc3d_out')
+
+os.system('python3.6 convolve_fits.py -freq 45') 
+os.system('python3.6 convolve_fits.py -freq 95') 
+
+print("Moving *.fits files to data/")
+os.system('mv *.fits data')
