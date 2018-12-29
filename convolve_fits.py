@@ -1,3 +1,4 @@
+#astropy2->py36
 import numpy as np
 from astropy.convolution import Gaussian2DKernel, convolve, convolve_fft
 from astropy.io import fits
@@ -29,11 +30,12 @@ pixres = abs(datah['CDELT1'])
 a_pix = datah['BMAJ'] / pixres
 b_pix = datah['BMIN'] / pixres
 posang = datah['BPA']
+print (a_pix,b_pix)
 
 x_stddev = a_pix / 2.35482 # = x_fwhm / 2.35482
 y_stddev = b_pix / 2.35482 # = y_fwhm / 2.35482
 
-r_gauss = hwhm = np.sqrt(a_pix * b_pix)
+r_gauss = hwhm = 0.5 * np.sqrt(a_pix * b_pix) 
 areaBeamPix=1.442*np.pi*hwhm**2
 
 #2*np.log(2)=1.386 for Gaussian func.
@@ -47,10 +49,10 @@ print ('r_gauss:', r_gauss)
 
 kernel = Gaussian2DKernel(x_stddev = x_stddev,
                           y_stddev = y_stddev,
-                          theta = posang * 180 / np.pi)
+                          theta = posang * np.pi/180 + np.pi/2)
 nx = datah['NAXIS1']
 ny = datah['NAXIS2']
-result = areaBeamPix*convolve(sf3d.data.squeeze()[0:ny][0:nx], kernel)
+result = areaBeamPix * convolve(sf3d.data.squeeze()[0:ny][0:nx], kernel)
 
 sf3d.header['BUNIT'] = datah['BUNIT']
 sf3d.header['BMAJ'] = datah['BMAJ']

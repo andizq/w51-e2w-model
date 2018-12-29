@@ -24,8 +24,8 @@ dens0 = 1*3.e14 / 15. * 2. * 1.1
 qn = -0.5 #-2
 dens = [dens0, qn]
 
-a = np.sqrt(2*300*AU) #10*AU
-b = np.sqrt(4*150*AU) #10*AU
+a = 1.3*np.sqrt(300*AU) #10*AU
+b = 3.2*np.sqrt(150*AU) #10*AU
 make_paraboloid(pos_c, pos_f, r_min, drBIGGRID, a, b, dens, T0, width = 40*AU, r_max = r_max, name = tag)
 
 
