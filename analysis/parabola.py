@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 from astropy.io import fits
 from astropy import wcs
@@ -41,8 +42,15 @@ if not os.path.exists(path_data+'W51e2w_VLA_Q_cutout.fits'):
 else:
     img_45ghz = fits.getdata(path_data+'W51e2w_VLA_Q_cutout.fits')
 
-cy,cx = 127,41
+
+#******************
+#ANALYSIS 95 GHz
+#******************
+cy,cx = np.where(img_95ghz == img_95ghz.max()) #127,41
+cy += 2; cx += 1 #Small adjustments
 angle = (180+315) * u.deg
+print ('Image 95 GHz --> center cy,cx: ({}, {})'.format(cy,cx) 
+       + ', position angle:', (90 + angle.value%360)*u.deg)
 
 xx = np.linspace(0,50,1000)
 yy = xx**2 / 28
@@ -67,15 +75,22 @@ pl.plot(prj_dist, data_on_path)
 #pl.plot(prj_dist, data_on_pathb, color = 'black')
 pl.plot(prj_dist, data_on_path2)
 core = data_on_path[:10].mean()
+"""
 profile = (core*(prj_dist/prj_dist[250])**-0.1 * (prj_dist >= prj_dist[250])/10.
            + core * (1-(prj_dist/prj_dist[580])**2) * (prj_dist<=prj_dist[580])
            )
+"""
 profile = core * (1-(prj_dist/prj_dist[580])**2) * (prj_dist<=prj_dist[580])
 
 pl.plot(prj_dist, profile)
 
-
-cy,cx = 62,23
+#******************
+#ANALYSIS 45 GHz
+#******************
+cy,cx = np.where(img_45ghz == np.max(img_45ghz))
+cy += 3; cx += 2 #Small adjustments
+print ('Image 45 GHz --> center cy,cx: ({}, {})'.format(cy,cx) 
+       + ', position angle:', (90 + angle.value%360)*u.deg)
 
 xx = np.linspace(0,25,1000)
 yy = xx**2 / 17
@@ -98,9 +113,12 @@ pl.clf()
 pl.plot(prj_dist, data_on_path)
 pl.plot(prj_dist, data_on_path2)
 core = data_on_path[:10].mean()
+
+"""
 profile = (core*(prj_dist/prj_dist[250])**-0.1 * (prj_dist >= prj_dist[250])/10.
            + core * (1-(prj_dist/prj_dist[580])**2) * (prj_dist<=prj_dist[580])
            )
+"""
 profile = core * (1-(prj_dist/prj_dist[580])**2) * (prj_dist<=prj_dist[580])
 
 pl.plot(prj_dist, profile)

@@ -30,7 +30,9 @@ pixres = abs(datah['CDELT1'])
 a_pix = datah['BMAJ'] / pixres
 b_pix = datah['BMIN'] / pixres
 posang = datah['BPA']
-print (a_pix,b_pix)
+
+print ('Pixel resolution', pixres)
+print ('Image centers in pxls x,y:', datah['NAXIS1']/2, datah['NAXIS2']/2)
 
 x_stddev = a_pix / 2.35482 # = x_fwhm / 2.35482
 y_stddev = b_pix / 2.35482 # = y_fwhm / 2.35482

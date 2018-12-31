@@ -9,9 +9,9 @@ import sf3dmodels.BuildGlobalGrid as BGG
 from sf3dmodels import Model, Plot_model as Pm, Utils as U
 import numpy as np
 
-sizex = 1700 * U.AU
+sizex = 2000 * U.AU
 sizey = sizez = sizex
-Nx = 60 
+Nx = 80 
 Ny = Nz = Nx
 GRID = Model.grid([sizex, sizey, sizez], [Nx, Ny, Nz], radmc3d = True)
 global_prop = BGG.overlap(GRID, all = False, radmc3d = True,

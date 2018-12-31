@@ -11,7 +11,7 @@ args = parser.parse_args()
 if args.file: file = args.file
 else: file = 'image.fits'
     
-dist = 5410.
+dist = 5410. #pc
 im = image.readImage()
 
 #image.plotImage(im, au=True, log=True, maxlog=10, saturate=1e-5, cmap=plt.cm.gist_heat)
