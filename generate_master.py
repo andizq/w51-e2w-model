@@ -1,6 +1,10 @@
+from __future__ import print_function
 import runpy
 import os
 import shutil
+import time
+
+t0 = time.time()
 
 runpy.run_path('exec_paraboloid.py')
 runpy.run_path('exec_shellparab.py')
@@ -9,9 +13,9 @@ import sf3dmodels.BuildGlobalGrid as BGG
 from sf3dmodels import Model, Plot_model as Pm, Utils as U
 import numpy as np
 
-sizex = 2000 * U.AU
+sizex = 3000 * U.AU
 sizey = sizez = sizex
-Nx = 80 
+Nx = 100 
 Ny = Nz = Nx
 GRID = Model.grid([sizex, sizey, sizez], [Nx, Ny, Nz], radmc3d = True)
 global_prop = BGG.overlap(GRID, all = False, radmc3d = True,
@@ -55,3 +59,5 @@ os.system('python3.6 convolve_fits.py -freq 95')
 
 print("Moving *.fits files to data/")
 os.system('mv *.fits data')
+
+print("Ellapsed time from master: %.2f s"%(time.time()-t0))
