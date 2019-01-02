@@ -31,7 +31,7 @@ T0 = 10000.
 qT = 0.
 temp = [T0, qT]
 
-dens0 = 3.4e13
+dens0 = 2.8e13
 qn = -0.4 #-2
 dens = [dens0, qn]
 
@@ -40,7 +40,7 @@ b = 1.8*np.sqrt(300*AU) #10*AU
 GRID, props = make_paraboloid(z_min, z_max, drBIGGRID, a, b, dens, T0, width = 20*AU)
 shift = Model.ChangeGeometry(GRID, center = np.array([0, dy-20, dx+20])*AU,
                              rot_dict = { 'angles': [-np.pi/180*(posang+90 + 8),
-                                                      0], 
+                                                      -np.pi/6], 
                                           'axis': ['x','y'] })
 GRID.XYZ = shift.newXYZ
 Make_Datatab(props, GRID).submodel(tag = tag)

@@ -42,7 +42,7 @@ b = 2*np.sqrt(300*AU) #10*AU
 GRID, props  = make_paraboloid(z_min, z_max, drBIGGRID, a, b, dens, T0)
 shift = Model.ChangeGeometry(GRID, center = np.array([0, dy, dx])*AU,
                              rot_dict = { 'angles': [-np.pi/180*(posang+90 + 8),
-                                                      0], 
+                                                      -np.pi/6], 
                                           'axis': ['x','y'] })
 GRID.XYZ = shift.newXYZ
 Make_Datatab(props, GRID).submodel(tag = tag)
