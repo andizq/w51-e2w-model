@@ -4,11 +4,17 @@ from astropy.convolution import Gaussian2DKernel, convolve, convolve_fft
 from astropy.io import fits
 from argparse import ArgumentParser
 
+#**************************
+#PATHS
+#**************************
+path_data = '/Users/andrespipecar42/w51/data/'
+
+#**************************
+#USER's INPUT
+#**************************
 parser = ArgumentParser(prog='Paraboloids', description='Free free emission from paraboloids')
 parser.add_argument('-freq', '--freq', help='frequency of the fits file to be convolved')
 args = parser.parse_args()
-
-path_data = '/Users/andrespipecar42/w51/data/'
 
 assert args.freq != None, "Did not provide any frequency via: python convolve_fits.py -freq 95"
 
@@ -21,7 +27,9 @@ elif '95' in args.freq:
     img_sf3d = 'image_95ghz.fits'
     img_conv = 'image_95ghz-conv.fits'
 
-#FWHM->stddev: FWHM=2*sqrt(2*log(2))*stddev ~= 2.35482*stddev
+#**************************
+#READING FITS AND BEAM INFO
+#**************************
 datah = fits.getheader(img_data)
 sf3d = fits.open(img_sf3d)[0]
 
@@ -31,23 +39,25 @@ a_pix = datah['BMAJ'] / pixres
 b_pix = datah['BMIN'] / pixres
 posang = datah['BPA']
 
-print ('Pixel resolution', pixres)
-print ('Image centers in pxls x,y:', datah['NAXIS1']/2, datah['NAXIS2']/2)
+print ('Pixel resolution in arcsecs: {:.4f}'.format(pixres*3600))
 
+#FWHM->stddev: FWHM=2*sqrt(2*log(2))*stddev ~= 2.35482*stddev
 x_stddev = a_pix / 2.35482 # = x_fwhm / 2.35482
 y_stddev = b_pix / 2.35482 # = y_fwhm / 2.35482
 
-r_gauss = hwhm = 0.5 * np.sqrt(a_pix * b_pix) 
+r_mean = hwhm = 0.5 * np.sqrt(a_pix * b_pix) 
+fwhm = 2*r_mean
+
 areaBeamPix=1.442*np.pi*hwhm**2
 
 #2*np.log(2)=1.386 for Gaussian func.
 #1.442 for Bessel func.
 
-#----------------------
-#CONVOLUTION and HEADER
-#----------------------
+#**************************
+#CONVOLUTION 
+#**************************
 print ("Convolving free-free continuum image...")
-print ('r_gauss:', r_gauss)
+print ('Beam mean fwhm in arcsecs: {:.3f}'.format(fwhm*pixres*3600))
 
 kernel = Gaussian2DKernel(x_stddev = x_stddev,
                           y_stddev = y_stddev,
@@ -56,6 +66,9 @@ nx = datah['NAXIS1']
 ny = datah['NAXIS2']
 result = areaBeamPix * convolve(sf3d.data.squeeze()[0:ny][0:nx], kernel)
 
+#**************************
+#SETTING HEADER
+#**************************
 sf3d.header['BUNIT'] = datah['BUNIT']
 sf3d.header['BMAJ'] = datah['BMAJ']
 sf3d.header['BMIN'] = datah['BMIN']
@@ -68,5 +81,8 @@ sf3d.header['CDELT2'] = datah['CDELT2']
 sf3d.header['CRPIX2'] = datah['CRPIX2']
 sf3d.header['RADESYS'] = datah['RADESYS']
 
-print ("Writing in '%s'"%img_conv)
+#**************************
+#WRITING INTO FITS FILE
+#**************************
+print ("Writing into '%s'"%img_conv)
 fits.writeto(img_conv,result,sf3d.header,overwrite=True) 
