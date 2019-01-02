@@ -13,6 +13,8 @@ python generate_master.py
 * data/image_95ghz.fits
 * data/image_45ghz-conv.fits
 * data/image_95ghz-conv.fits
+* radmc3d_inp/
+* radmc3d_out/
 
 ## External software:
 
