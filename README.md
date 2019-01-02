@@ -7,13 +7,15 @@ python generate_master.py
 ```
 
 ## Outputs:
-*	sed_all.png
-*	data/image_45ghz.fits
-*	data/image_95ghz.fits
-*	data/image_45ghz-conv.fits
-*	data/image_95ghz-conv.fits
+
+* sed_all.png
+* data/image_45ghz.fits
+* data/image_95ghz.fits
+* data/image_45ghz-conv.fits
+* data/image_95ghz-conv.fits
 
 ## External software:
-*       [radmc-3d](http://www.ita.uni-heidelberg.de/~dullemond/software/radmc-3d/)
-*	[sf3dmodels](https://star-forming-regions.readthedocs.io/en/latest/)
-* 	[astropy](http://www.astropy.org/)
+
+* [radmc-3d](http://www.ita.uni-heidelberg.de/~dullemond/software/radmc-3d/)
+* [sf3dmodels](https://star-forming-regions.readthedocs.io/en/latest/)
+* [astropy](http://www.astropy.org/)
