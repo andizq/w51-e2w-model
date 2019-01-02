@@ -33,11 +33,6 @@ shutil.move('spectrum.out','spectrum_shell.out')
 global_prop = BGG.overlap(GRID, all = False, radmc3d = True,
                           submodels=['shell0.dat', 'paraboloid0.dat'])
 
-from astropy import units as u
-alpha_b = 2.6e-13*u.cm**3 * u.s**-1
-Q = ((alpha_b * (global_prop.GRID.step*u.m)**3 * (global_prop.density*u.m**-3)**2).sum()).decompose()
-print('log10 of the ionizing luminosity Q [photons s^-1]', np.log10(Q.value))
-
 os.system('radmc3d sed dpc 5410')
 shutil.move('spectrum.out','spectrum_shell+parab.out')
 
@@ -59,5 +54,10 @@ os.system('python3.6 convolve_fits.py -freq 95')
 
 print("Moving *.fits files to data/")
 os.system('mv *.fits data')
+
+from astropy import units as u
+alpha_b = 2.6e-13*u.cm**3 * u.s**-1
+Q = ((alpha_b * (global_prop.GRID.step*u.m)**3 * (global_prop.density*u.m**-3)**2).sum()).decompose()
+print('log10 of the ionizing luminosity Q [photons s^-1]', np.log10(Q.value))
 
 print("Ellapsed time from master: %.2f s"%(time.time()-t0))

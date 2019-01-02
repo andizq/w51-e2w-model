@@ -1,39 +1,18 @@
 from sf3dmodels.create_parabola import *
 from sf3dmodels.Utils import *
 from sf3dmodels.Model import Make_Datatab
-from astropy.io import fits
 from argparse import ArgumentParser
+from utils_paraboloid import get_shift
 import os
 
 parser = ArgumentParser(prog='Paraboloids', description='Modelling paraboloid HII regions')
 parser.add_argument('-freq', '--freq', help='frequency of the fits file to be convolved')
 args = parser.parse_args()
-path_data = '/Users/andrespipecar42/w51/data/'
-dist = 5410. #pc
 
 #***************************************
-#Getting real centres to shift the model
+#Getting parameters to shift the model
 #***************************************
-if args.freq is None:
-    img_data = path_data + 'W51e2w_ALMAB3_cutout.fits'
-    cy, cx = 127, 41 #real paraboloid center in pxls
-    posang = 225.
-
-elif '45' in args.freq: 
-    img_data = path_data + 'W51e2w_VLA_Q_cutout.fits'
-    cy, cx = 62, 23 #real paraboloid center in pxls
-    posang = 225.
-
-elif '95' in args.freq: 
-    img_data = path_data + 'W51e2w_ALMAB3_cutout.fits'
-    cy, cx = 127, 41 #real paraboloid center in pxls
-    posang = 225.
-
-datah = fits.getheader(img_data)
-pixres = abs(datah['CDELT1']) * 3600 #pixel resolution of the data in arcsecs
-iy, ix = np.array([datah['NAXIS2'], datah['NAXIS1']]) / 2 #image centre in pxls
-dx = pixres * (cx - ix) * dist #x-shift in au
-dy = pixres * (cy - iy) * dist #y-shift in au
+dx, dy, posang = get_shift(args.freq)
 print("Paraboloid shift in au", dx, dy)
 
 #***************************************
@@ -52,17 +31,19 @@ T0 = 10000.
 qT = 0.
 temp = [T0, qT]
 
-dens0 = 2e14 * 5 / 2.5 / 1.1
-qn = -1. #-2
+dens0 = 2.5e14 
+qn = -0.9 #-2
 #dens0 = 2e14 * 5 / 2.5 / 50
 #qn = -0.5 #-2
 dens = [dens0, qn]
 
-a = 1.3*np.sqrt(300*AU) #10*AU
-b = 3.2*np.sqrt(150*AU) #10*AU
+a = 2*np.sqrt(300*AU) #10*AU
+b = 2*np.sqrt(300*AU) #10*AU
 GRID, props  = make_paraboloid(z_min, z_max, drBIGGRID, a, b, dens, T0)
 shift = Model.ChangeGeometry(GRID, center = np.array([0, dy, dx])*AU,
-                             rot_dict = { 'angles': [-np.pi/180*(posang+90 + 2)], 'axis': ['x'] })
+                             rot_dict = { 'angles': [-np.pi/180*(posang+90 + 8),
+                                                      0], 
+                                          'axis': ['x','y'] })
 GRID.XYZ = shift.newXYZ
 Make_Datatab(props, GRID).submodel(tag = tag)
 

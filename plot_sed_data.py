@@ -26,8 +26,8 @@ F_nu2 = s2[:,1] * distance**-2 * 1e23
 F_nu3 = s3[:,1] * distance**-2 * 1e23
 nu = 3e8 * s[:,0]**-1 * 1e6 * 1e-9 #microns to GHz
 plt.plot(nu, F_nu, label = "shell+parab")
-plt.plot(nu, F_nu2, label = "parab") 
-plt.plot(nu, F_nu3, label = "shell") 
+plt.plot(nu, F_nu2, '--', label = "parab") 
+plt.plot(nu, F_nu3, '--', label = "shell") 
 plt.plot(data.keys(), data.values(), 'o')
 plt.title('%s - distance: %d pc'%(tag,distance))
 plt.xlabel('Frequency [GHz]'); plt.ylabel('Flux density [Jy]')
