@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 #**************************
 #PATHS
 #**************************
-path_data = '/Users/andrespipecar42/w51/data/'
+path_data = './data/'
 
 #**************************
 #USER's INPUT
@@ -30,6 +30,9 @@ elif '95' in args.freq:
 #**************************
 #READING FITS AND BEAM INFO
 #**************************
+print ('Reading image to convolve:', img_sf3d)
+print ('Beam from data:', img_data)
+
 datah = fits.getheader(img_data)
 sf3d = fits.open(img_sf3d)[0]
 
@@ -56,7 +59,6 @@ areaBeamPix=1.442*np.pi*hwhm**2
 #**************************
 #CONVOLUTION 
 #**************************
-print ("Convolving free-free continuum image...")
 print ('Beam mean fwhm in arcsecs: {:.3f}'.format(fwhm*pixres*3600))
 
 kernel = Gaussian2DKernel(x_stddev = x_stddev,
@@ -84,5 +86,5 @@ sf3d.header['RADESYS'] = datah['RADESYS']
 #**************************
 #WRITING INTO FITS FILE
 #**************************
-print ("Writing into '%s'"%img_conv)
+print ("Writing into '%s'\n"%img_conv)
 fits.writeto(img_conv,result,sf3d.header,overwrite=True) 

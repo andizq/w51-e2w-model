@@ -5,7 +5,7 @@ from astropy.io import fits
 #Setting parameters to shift the model
 #***************************************
 
-path_data = '/Users/andrespipecar42/w51/data/'
+path_data = './data/'
 dist = 5410. #pc
 
 def get_name(freq):
