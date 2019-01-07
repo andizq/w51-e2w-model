@@ -22,7 +22,11 @@ tag = 'paraboloid0.dat'
 
 z_min = 1*AU
 z_max = 1800*AU
-drBIGGRID = 80*AU
+"""
+drBIGGRID = sqrt(dx**2+dy**2+dz**2) or smaller 
+ --> the smaller the more points to be generated
+"""
+drBIGGRID = 80*AU 
 
 #rho = lambda R: dens0
 #T = lambda R: 10000.
@@ -33,12 +37,10 @@ temp = [T0, qT]
 
 dens0 = 2.6e14 
 qn = -0.9 #-2
-#dens0 = 2e14 * 5 / 2.5 / 50
-#qn = -0.5 #-2
 dens = [dens0, qn]
 
-a = 2*np.sqrt(300*AU) #10*AU
-b = 2*np.sqrt(300*AU) #10*AU
+a = 2*np.sqrt(300*AU) 
+b = 2*np.sqrt(300*AU)
 GRID, props  = make_paraboloid(z_min, z_max, drBIGGRID, a, b, dens, T0)
 shift = Model.ChangeGeometry(GRID, center = np.array([0, dy, dx])*AU,
                              rot_dict = { 'angles': [-np.pi/180*(posang+90 + 8),

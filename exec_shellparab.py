@@ -22,6 +22,10 @@ tag = 'shell0.dat'
 
 z_min = 1*AU
 z_max = 400*AU
+"""
+drBIGGRID = sqrt(dx**2+dy**2+dz**2) or smaller 
+ --> the smaller the more points to be generated
+"""
 drBIGGRID = 20*AU
 
 #rho = lambda R: dens0
