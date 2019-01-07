@@ -9,6 +9,9 @@ python generate_master.py
 ## Outputs:
 
 * sed_all.png
+* global_gridA.png
+* global_gridB.png
+* global_gridC.png
 * data/image_45ghz.fits
 * data/image_95ghz.fits
 * data/image_45ghz-conv.fits
