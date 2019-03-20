@@ -4,6 +4,8 @@ Run everything via:
 
 ```bash
 python generate_master.py
+python analysis/parabola.py
+python analysis/parabola_model.py
 ```
 
 ## Outputs:
@@ -22,5 +24,6 @@ python generate_master.py
 ## External software:
 
 * [radmc-3d](http://www.ita.uni-heidelberg.de/~dullemond/software/radmc-3d/)
+* [radmc3dPy](https://www.ast.cam.ac.uk/~juhasz/radmc3dpy.html)
 * [sf3dmodels](https://star-forming-regions.readthedocs.io/en/latest/)
 * [astropy](http://www.astropy.org/)
