@@ -13,7 +13,7 @@ path_data = './data/'
 #USER's INPUT
 #**************************
 parser = ArgumentParser(prog='Paraboloids', description='Free free emission from paraboloids')
-parser.add_argument('-freq', '--freq', help='frequency of the fits file to be convolved')
+parser.add_argument('-freq', '--freq', help='Frequency of the fits file to be convolved')
 args = parser.parse_args()
 
 assert args.freq != None, "Did not provide any frequency via: python convolve_fits.py -freq 95"
@@ -30,8 +30,8 @@ elif '95' in args.freq:
 #**************************
 #READING FITS AND BEAM INFO
 #**************************
-print ('Reading image to convolve:', img_sf3d)
-print ('Beam from data:', img_data)
+print ('Model image to convolve:', img_sf3d)
+print ('Extracting beam from data:', img_data)
 
 datah = fits.getheader(img_data)
 sf3d = fits.open(img_sf3d)[0]
