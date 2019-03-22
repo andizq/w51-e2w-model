@@ -26,11 +26,11 @@ print("Outer shell shift in au", dx, dy)
 tag = 'shell0.dat'
 
 z_min = 1*u.au
-z_max = 400*u.au
+z_max = 1000*u.au
 """
 dx_grid --> the smaller the more grid points to be generated
 """
-dx_grid = 10*u.au
+dx_grid = 40*u.au
 
 #rho = lambda R: dens0
 #T = lambda R: 10000.
@@ -39,12 +39,12 @@ T0 = 10000.
 qT = 0.
 temp = [T0, qT]
 
-dens0 = 2.6e13
-qn = -0.4 #-2
+dens0 = 0.14*2.6e13
+qn = -0.15 #-0.4
 dens = [dens0, qn]
 
-a = 1.8*np.sqrt(300*u.au)
-b = 1.8*np.sqrt(300*u.au)
+a = 2.05*np.sqrt(300*u.au)
+b = 2.05*np.sqrt(300*u.au)
 GRID, props = make_paraboloid(z_min, z_max, dx_grid, a, b, dens, T0, width = 20*u.au)
 shift = Model.ChangeGeometry(GRID, center = np.array([dx+20, dy-20, 0])*u.au,
                              rot_dict = { 'angles': [-np.pi/2,

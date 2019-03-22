@@ -16,10 +16,10 @@ img_95ghz = fits.getdata(path_data+'image_95ghz-conv.fits').squeeze()
 #******************
 #ANALYSIS 45 GHz
 #******************
-angle = (180+315) * u.deg
+angle = (180+310) * u.deg
 
 cy,cx = np.where(img_45ghz == np.max(img_45ghz))
-cy += 1; cx += 1 #Small adjustments
+cy += 1; cx += 0 #Small adjustments
 print ('Image 45 GHz --> center cy,cx: ({}, {})'.format(cy,cx) 
        + ', position angle:', (90 + angle.value%360)*u.deg)
 

@@ -39,12 +39,12 @@ T0 = 10000.
 qT = 0.
 temp = [T0, qT]
 
-dens0 = 2.6e14 
-qn = -0.9 #-2
+dens0 = 0.24*2.6e14 
+qn = -0.7 #-0.9
 dens = [dens0, qn]
 
-a = 2*np.sqrt(300*u.au) 
-b = 2*np.sqrt(300*u.au)
+a = 2.0*np.sqrt(300*u.au) 
+b = 2.0*np.sqrt(300*u.au)
 GRID, props  = make_paraboloid(z_min, z_max, dx_grid, a, b, dens, T0)
 shift = Model.ChangeGeometry(GRID, center = np.array([dx, dy, 0])*u.au,
                              rot_dict = { 'angles': [-np.pi/2,
