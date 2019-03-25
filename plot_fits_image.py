@@ -5,11 +5,8 @@ from argparse import ArgumentParser
 import os
 
 parser = ArgumentParser(prog='Paraboloids', description='Free free emission from paraboloids')
-parser.add_argument('-f', '--file', help='fits file to write in')
+parser.add_argument('-f', '--file', default='image.fits', help='fits file name')
 args = parser.parse_args()
-
-if args.file: file = args.file
-else: file = 'image.fits'
     
 dist = 5410. #pc
 im = image.readImage()
@@ -23,5 +20,5 @@ image.plotImage(cim, arcsec=True, dpc=dist, log=True, maxlog=10, bunit='snu', cm
 """
 
 #os.system('rm %s'%file)
-im.writeFits(file, dpc=dist)#, coord='03h10m05s -10d05m30s')
+im.writeFits(args.file, dpc=dist)#, coord='03h10m05s -10d05m30s')
 
