@@ -1,6 +1,6 @@
 from __future__ import print_function
 import runpy
-import os, sys
+import os, sys, subprocess
 import shutil
 import time
 import numpy as np
@@ -35,6 +35,13 @@ About the lambda function files_ff
   lam: wavelength intervals in microns, 
   nxx: num of partitions in each interval
 """
+
+#*******************
+#External commands
+#*******************
+cmd_check_call = lambda S: subprocess.check_call(S, shell=True)
+cmd_call = lambda S: subprocess.call(S, shell=True)
+
 #*************************************
 #COMMON GRID TO MERGE THE SUBMODELS IN
 #*************************************
@@ -54,7 +61,7 @@ prop_globalA = globalA.fromfiles(columns,
 A = rt.Radmc3dDefaults(GRID)
 files_ff(A, prop_globalA)
 
-os.system('radmc3d sed dpc 5410')
+cmd_check_call('radmc3d sed dpc 5410')
 shutil.move('spectrum.out','spectrum_parab.out')
 print ('-------------------------------------------------\n-------------------------------------------------')
 
@@ -68,7 +75,7 @@ prop_globalB = globalB.fromfiles(columns,
 B = rt.Radmc3dDefaults(GRID)
 files_ff(B, prop_globalB)
 
-os.system('radmc3d sed dpc 5410')
+cmd_check_call('radmc3d sed dpc 5410')
 shutil.move('spectrum.out','spectrum_shell.out')
 print ('-------------------------------------------------\n-------------------------------------------------')
 
@@ -82,7 +89,7 @@ prop_globalC = globalC.fromfiles(columns,
 C = rt.Radmc3dDefaults(GRID)
 files_ff(C, prop_globalC)
 
-os.system('radmc3d sed dpc 5410')
+cmd_check_call('radmc3d sed dpc 5410')
 shutil.move('spectrum.out','spectrum_shell+parab.out')
 
 #**********************************
@@ -112,21 +119,21 @@ runpy.run_path('plot_sed_data.py')
 runpy.run_path('generate_fits.py')
 print ('-------------------------------------------------\n-------------------------------------------------')
 print("Creating folder radmc3d_inp/")
-os.system('mkdir radmc3d_inp')
+cmd_call('mkdir radmc3d_inp')
 print("Moving *.inp files into radmc3d_inp/")
-os.system('mv *.inp radmc3d_inp')
+cmd_call('mv *.inp radmc3d_inp')
 
 print("Creating folder radmc3d_out/")
-os.system('mkdir radmc3d_out')
+cmd_call('mkdir radmc3d_out')
 print("Moving *.out files into radmc3d_out/")
-os.system('mv *.out radmc3d_out')
+cmd_call('mv *.out radmc3d_out')
 
 print("\n*** Using python3 (astropy2) for the convolution ***\n")
-os.system('python3 convolve_fits.py -freq 45') 
-os.system('python3 convolve_fits.py -freq 95') 
+cmd_call('python3 convolve_fits.py -freq 45') 
+cmd_call('python3 convolve_fits.py -freq 95') 
 
 print("Moving *.fits files into data/")
-os.system('mv *.fits data')
+cmd_call('mv *.fits data')
 
 from astropy import units as un
 alpha_b = 2.6e-13*un.cm**3*un.s**-1 #Notes-on-Photoionized-Regions, Caltech, 2011
